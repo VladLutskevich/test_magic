@@ -1,0 +1,219 @@
+<p-toast position="top-right" />
+<p-confirmDialog />
+
+<p-card class="potions-list-card">
+  <ng-template pTemplate="header">
+    <div class="card-header">
+      <h2 class="text-3xl font-bold text-center py-4 text-purple-900 dark:text-purple-100">
+        📚 Potion Orders Archive
+      </h2>
+      <div class="text-center pb-3 text-white">
+        <span class="text-lg font-semibold">Total Potions: {{ potionsCount() }}</span>
+      </div>
+    </div>
+  </ng-template>
+
+  @if (potions().length === 0) {
+    <div class="empty-state">
+      <i class="pi pi-inbox text-6xl text-purple-300 mb-4"></i>
+      <h3 class="text-2xl font-bold text-gray-600 mb-2">No Potions Yet</h3>
+      <p class="text-gray-500">Start brewing your first magical potion!</p>
+    </div>
+  } @else {
+    <div class="table-container">
+      <p-table
+        [value]="potions()"
+        [paginator]="true"
+        [rows]="10"
+        [rowsPerPageOptions]="[5, 10, 20]"
+        [tableStyle]="{ 'min-width': '100%' }"
+        styleClass="p-datatable-striped"
+        responsiveLayout="scroll"
+        [globalFilterFields]="['potionNumber', 'orderedBy', 'deliveryAddress']"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 12%">Potion #</th>
+            <th style="width: 15%">Customer</th>
+            <th style="width: 10%">Order Date</th>
+            <th style="width: 10%">Ready Date</th>
+            <th style="width: 13%">Delivery</th>
+            <th style="width: 12%">Payment</th>
+            <th style="width: 10%" class="text-right">Total Cost</th>
+            <th style="width: 10%">Status</th>
+            <th style="width: 8%">Actions</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-potion>
+          <tr>
+            <td>
+              <strong>{{ potion.potionNumber }}</strong>
+            </td>
+            <td>
+              <div class="flex items-center gap-2">
+                <span class="customer-name">{{ potion.orderedBy }}</span>
+              </div>
+            </td>
+            <td>{{ formatDate(potion.orderDate) }}</td>
+            <td>{{ formatDate(potion.readyDate) }}</td>
+            <td>
+              <span class="delivery-badge">
+                {{ getDeliveryIcon(potion.deliveryMethod) }}
+                {{ potion.deliveryMethod }}
+              </span>
+            </td>
+            <td>
+              <span class="payment-badge">
+                {{ getPaymentIcon(potion.paymentMethod) }}
+                {{ potion.paymentMethod }}
+              </span>
+            </td>
+            <td class="text-right">
+              <strong class="text-green-600 text-lg">
+                💰 {{ potion.totalCost | number: '1.2-2' }}
+              </strong>
+            </td>
+            <td>
+              <p-tag
+                [value]="getStatusIcon(potion.status) + ' ' + (potion.status || 'brewing')"
+                [severity]="getStatusSeverity(potion.status)"
+              />
+            </td>
+            <td>
+              <div class="flex gap-2">
+                <p-button
+                  icon="pi pi-eye"
+                  [rounded]="true"
+                  [text]="true"
+                  severity="info"
+                  (onClick)="viewDetails(potion)"
+                  pTooltip="View Details"
+                  tooltipPosition="top"
+                />
+                <p-button
+                  icon="pi pi-trash"
+                  [rounded]="true"
+                  [text]="true"
+                  severity="danger"
+                  (onClick)="deletePotion(potion, $event)"
+                  pTooltip="Delete"
+                  tooltipPosition="top"
+                />
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  }
+</p-card>
+
+<p-dialog
+  [(visible)]="displayDialog"
+  [header]="'Potion Details: ' + selectedPotion()?.potionNumber"
+  [modal]="true"
+  [style]="{ width: '90vw', 'max-width': '900px' }"
+  [draggable]="false"
+  [resizable]="false"
+  styleClass="potion-dialog"
+>
+  @if (selectedPotion(); as potion) {
+    <div class="potion-details">
+      <div class="detail-section">
+        <h3 class="detail-section-title">📋 Order Information</h3>
+        <div class="detail-grid">
+          <div class="detail-item">
+            <span class="detail-label">Potion Number:</span>
+            <span class="detail-value">{{ potion.potionNumber }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Status:</span>
+            <p-tag
+              [value]="getStatusIcon(potion.status) + ' ' + (potion.status || 'brewing')"
+              [severity]="getStatusSeverity(potion.status)"
+            />
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Customer:</span>
+            <span class="detail-value">{{ potion.orderedBy }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Order Date:</span>
+            <span class="detail-value">{{ formatDate(potion.orderDate) }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Ready Date:</span>
+            <span class="detail-value">{{ formatDate(potion.readyDate) }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <h3 class="detail-section-title">🚚 Delivery Information</h3>
+        <div class="detail-grid">
+          <div class="detail-item full-width">
+            <span class="detail-label">Address:</span>
+            <span class="detail-value">{{ potion.deliveryAddress }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Delivery Method:</span>
+            <span class="detail-value">
+              {{ getDeliveryIcon(potion.deliveryMethod) }} {{ potion.deliveryMethod }}
+            </span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Payment Method:</span>
+            <span class="detail-value">
+              {{ getPaymentIcon(potion.paymentMethod) }} {{ potion.paymentMethod }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-section">
+        <h3 class="detail-section-title">🧪 Ingredients</h3>
+        <div class="ingredients-table">
+          <table class="w-full">
+            <thead>
+              <tr>
+                <th class="text-left">Ingredient</th>
+                <th class="text-center">Quantity</th>
+                <th class="text-right">Price/Unit</th>
+                <th class="text-right">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (ingredient of potion.ingredients; track ingredient.id) {
+                <tr>
+                  <td class="font-semibold">{{ ingredient.name }}</td>
+                  <td class="text-center">{{ ingredient.quantity }} {{ ingredient.unit }}</td>
+                  <td class="text-right">{{ ingredient.pricePerUnit | number: '1.2-2' }}</td>
+                  <td class="text-right text-green-600 font-bold">
+                    💰 {{ ingredient.totalPrice | number: '1.2-2' }}
+                  </td>
+                </tr>
+              }
+            </tbody>
+            <tfoot>
+              <tr class="total-row">
+                <td colspan="3" class="text-right font-bold text-lg">Total Potion Cost:</td>
+                <td class="text-right font-bold text-xl text-green-700">
+                  💰 {{ potion.totalCost | number: '1.2-2' }}
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  }
+
+  <ng-template pTemplate="footer">
+    <p-button
+      label="Close"
+      icon="pi pi-times"
+      (onClick)="closeDialog()"
+      severity="secondary"
+    />
+  </ng-template>
+</p-dialog>

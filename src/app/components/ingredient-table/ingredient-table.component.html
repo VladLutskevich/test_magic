@@ -1,0 +1,124 @@
+<div class="ingredient-table-container">
+  <div class="button-header flex justify-between items-center">
+    <h3 class="text-xl font-semibold text-purple-800 dark:text-purple-300">
+      🧪 Potion Ingredients
+    </h3>
+    <p-button
+      icon="pi pi-plus"
+      label="Add Ingredient"
+      severity="success"
+      (onClick)="addIngredient()"
+      [disabled]="disabled()"
+      size="small"
+    />
+  </div>
+
+  @if (ingredients().length === 0) {
+    <div class="empty-state text-center py-8 text-gray-500">
+      <i class="pi pi-info-circle text-4xl mb-3"></i>
+      <p>No ingredients added yet. Start brewing by adding at least 3 ingredients!</p>
+    </div>
+  } @else {
+    <div class="ingredients-grid">
+      @for (ingredient of ingredients(); track ingredient.id) {
+        <div class="ingredient-card">
+          <div class="ingredient-card-header">
+            <span class="ingredient-number">Ingredient #{{ $index + 1 }}</span>
+            <p-button
+              label="🗑️ Delete"
+              severity="danger"
+              [text]="true"
+              [rounded]="true"
+              (onClick)="removeIngredient(ingredient.id)"
+              [disabled]="disabled()"
+              size="small"
+            />
+          </div>
+
+          <div class="ingredient-card-body">
+            <div class="form-field">
+              <label class="field-label">🧪 Ingredient Name</label>
+              <input
+                pInputText
+                type="text"
+                [(ngModel)]="ingredient.name"
+                (ngModelChange)="onIngredientChange()"
+                placeholder="e.g., Dragon Scale"
+                [disabled]="disabled()"
+                class="w-full"
+              />
+            </div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label class="field-label">⚖️ Quantity</label>
+                <p-inputNumber
+                  [ngModel]="ingredient.quantity"
+                  (ngModelChange)="updateIngredient(ingredient.id, 'quantity', $event)"
+                  [min]="0"
+                  [disabled]="disabled()"
+                  [showButtons]="true"
+                  buttonLayout="horizontal"
+                  decrementButtonClass="p-button-secondary"
+                  incrementButtonClass="p-button-secondary"
+                  styleClass="w-full"
+                />
+              </div>
+
+              <div class="form-field">
+                <label class="field-label">📏 Unit</label>
+                <p-select
+                  [options]="availableUnits"
+                  [ngModel]="ingredient.unit"
+                  (ngModelChange)="updateIngredient(ingredient.id, 'unit', $event)"
+                  optionLabel="label"
+                  optionValue="value"
+                  [disabled]="disabled()"
+                  styleClass="w-full"
+                />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label class="field-label">💰 Price per Unit</label>
+                <p-inputNumber
+                  [ngModel]="ingredient.pricePerUnit"
+                  (ngModelChange)="updateIngredient(ingredient.id, 'pricePerUnit', $event)"
+                  [min]="0"
+                  [minFractionDigits]="2"
+                  [maxFractionDigits]="2"
+                  [disabled]="disabled()"
+                  [showButtons]="true"
+                  buttonLayout="horizontal"
+                  decrementButtonClass="p-button-secondary"
+                  incrementButtonClass="p-button-secondary"
+                  styleClass="w-full"
+                />
+              </div>
+
+              <div class="form-field">
+                <label class="field-label">💵 Total Price</label>
+                <div class="total-price">
+                  {{ ingredient.totalPrice | number: '1.2-2' }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="total-cost-container">
+      <span class="total-label">Total Potion Cost:</span>
+      <span class="total-value">💰 {{ getTotalCost() | number: '1.2-2' }}</span>
+    </div>
+  }
+
+  @if (ingredients().length < 3 && ingredients().length > 0) {
+    <div class="mt-3 p-3 bg-red-50 border-l-4 border-red-500 text-red-700">
+      <i class="pi pi-exclamation-triangle mr-2"></i>
+      <span>A proper potion requires at least 3 ingredients! Current: {{ ingredients().length }}</span>
+    </div>
+  }
+</div>

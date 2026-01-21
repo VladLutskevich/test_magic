@@ -1,0 +1,49 @@
+<div class="dashboard-container">
+  <header class="dashboard-header">
+    <div class="header-content">
+      <div class="header-icon">🧙‍♂️</div>
+      <div class="header-text">
+        <h1 class="header-title">Wizard's Potion Shop</h1>
+        <p class="header-subtitle">Brewing Magic Since 1692 ✨</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="dashboard-main">
+    <p-tabs [(value)]="activeIndex" styleClass="custom-tabview">
+      <p-tablist>
+        <p-tab value="0">
+          <i class="pi pi-plus-circle mr-2"></i>
+          🧪 Create Potion
+        </p-tab>
+        <p-tab value="1">
+          <i class="pi pi-list mr-2"></i>
+          📚 Potion Orders
+        </p-tab>
+      </p-tablist>
+      <p-tabpanels>
+        <p-tabpanel value="0">
+          <div class="tab-content">
+            <app-potion-form />
+          </div>
+        </p-tabpanel>
+        <p-tabpanel value="1">
+          <div class="tab-content">
+            <app-potions-list />
+          </div>
+        </p-tabpanel>
+      </p-tabpanels>
+    </p-tabs>
+  </main>
+
+  <footer class="dashboard-footer">
+    <div class="footer-content">
+      <p class="footer-text">
+        © 2026 Wizard's Potion Shop. All potions are brewed with care and magic ✨
+      </p>
+      <p class="footer-subtext">
+        Warning: Side effects may include temporary invisibility, enhanced wisdom, or uncontrollable laughter
+      </p>
+    </div>
+  </footer>
+</div>

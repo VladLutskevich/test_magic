@@ -1,0 +1,285 @@
+.potions-list-card {
+  margin: 1rem auto;
+  max-width: 1600px;
+  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
+  border-radius: 16px;
+  overflow: visible;
+}
+
+.card-header {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+  color: white;
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px 16px 0 0;
+}
+
+.card-header::before {
+  content: '📚';
+  position: absolute;
+  font-size: 150px;
+  opacity: 0.1;
+  top: -30px;
+  left: -20px;
+  transform: rotate(15deg);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+}
+
+.table-container {
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.customer-name {
+  font-weight: 600;
+  color: inherit;
+}
+
+.delivery-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+}
+
+.payment-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
+}
+
+.potion-details {
+  padding: 1rem;
+}
+
+.detail-section {
+  margin-bottom: 2rem;
+  background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 2px solid rgba(139, 92, 246, 0.2);
+}
+
+.detail-section-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #6b21a8;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid rgba(139, 92, 246, 0.3);
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.detail-item.full-width {
+  grid-column: 1 / -1;
+}
+
+.detail-label {
+  font-weight: 600;
+  color: #6b21a8;
+  font-size: 0.875rem;
+}
+
+.detail-value {
+  font-size: 1rem;
+  color: #1f2937;
+  font-weight: 500;
+}
+
+.ingredients-table {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ingredients-table table {
+  border-collapse: collapse;
+}
+
+.ingredients-table thead th {
+  background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+  color: white;
+  padding: 0.75rem;
+  font-weight: 600;
+}
+
+.ingredients-table tbody td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.ingredients-table tbody tr:hover {
+  background: #faf5ff;
+}
+
+.ingredients-table tfoot .total-row {
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+  border-top: 2px solid #8b5cf6;
+}
+
+.ingredients-table tfoot td {
+  padding: 1rem 0.75rem;
+}
+
+:host ::ng-deep {
+  .p-datatable .p-datatable-thead > tr > th {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    color: white;
+    font-weight: 600;
+    padding: 1rem;
+  }
+
+  .p-datatable .p-datatable-tbody > tr {
+    transition: all 0.3s ease;
+  }
+
+  .p-datatable .p-datatable-tbody > tr:hover {
+    background: #faf5ff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.15);
+  }
+
+  .p-dialog .p-dialog-header {
+    background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+    color: white;
+    font-weight: 700;
+  }
+
+  .p-dialog .p-dialog-content {
+    padding: 0;
+  }
+
+  .p-tag {
+    padding: 0.5rem 0.75rem;
+    font-weight: 600;
+    border-radius: 6px;
+    font-size: 0.9rem;
+  }
+
+  .p-tag.p-tag-success {
+    background: #10b981 !important;
+    color: white !important;
+  }
+
+  .p-tag.p-tag-info {
+    background: #3b82f6 !important;
+    color: white !important;
+  }
+
+  .p-tag.p-tag-warn {
+    background: #f59e0b !important;
+    color: white !important;
+  }
+
+  .p-tag.p-tag-danger {
+    background: #ef4444 !important;
+    color: white !important;
+  }
+
+  .p-tag.p-tag-secondary {
+    background: #6b7280 !important;
+    color: white !important;
+  }
+
+  .p-tag.p-tag-contrast {
+    background: #1f2937 !important;
+    color: white !important;
+  }
+
+  .p-paginator {
+    background: #faf5ff;
+    border-top: 2px solid rgba(139, 92, 246, 0.2);
+    padding: 1rem;
+  }
+
+  .p-paginator .p-paginator-current {
+    color: #6b21a8;
+    font-weight: 600;
+  }
+
+  .p-confirm-dialog .p-dialog-header {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+  }
+}
+
+@media (max-width: 768px) {
+  .potions-list-card {
+    margin: 0.5rem;
+  }
+
+  .card-header h2 {
+    font-size: 1.75rem;
+  }
+
+  .table-container {
+    padding: 0.5rem;
+  }
+
+  .detail-section {
+    padding: 1rem;
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ingredients-table {
+    overflow-x: auto;
+  }
+
+  :host ::ng-deep {
+    .p-datatable .p-datatable-thead > tr > th,
+    .p-datatable .p-datatable-tbody > tr > td {
+      padding: 0.5rem;
+      font-size: 0.875rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .card-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .detail-section-title {
+    font-size: 1.1rem;
+  }
+
+  .ingredients-table thead th,
+  .ingredients-table tbody td,
+  .ingredients-table tfoot td {
+    padding: 0.5rem;
+    font-size: 0.875rem;
+  }
+}

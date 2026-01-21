@@ -1,0 +1,203 @@
+.potion-form-card {
+  margin: 1rem auto;
+  max-width: 1400px;
+  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
+  border-radius: 16px;
+  overflow: visible;
+}
+
+.card-header {
+  background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 50%, #d946ef 100%);
+  color: white;
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px 16px 0 0;
+}
+
+.card-header::before {
+  content: '✨';
+  position: absolute;
+  font-size: 150px;
+  opacity: 0.1;
+  top: -30px;
+  right: -20px;
+  transform: rotate(-15deg);
+}
+
+.potion-form {
+  padding: 1rem;
+  overflow: visible;
+}
+
+.form-section {
+  background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border: 2px solid rgba(139, 92, 246, 0.2);
+  position: relative;
+  overflow: visible;
+}
+
+.form-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #8b5cf6, #a855f7, #d946ef);
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #6b21a8;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-label {
+  font-weight: 600;
+  color: #4c1d95;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.form-label.required::after {
+  content: '*';
+  color: #dc2626;
+  font-weight: bold;
+  margin-left: 0.25rem;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid rgba(139, 92, 246, 0.2);
+}
+
+.p-error {
+  color: #ef4444 !important;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: block;
+  font-weight: 500;
+}
+
+small.p-error {
+  color: #ef4444 !important;
+}
+
+:host ::ng-deep {
+  .p-card {
+    overflow: visible !important;
+  }
+
+  .p-card-body {
+    padding: 0;
+    overflow: visible !important;
+  }
+
+  .p-card-content {
+    padding: 0;
+    overflow: visible !important;
+  }
+
+  .p-inputtext,
+  .p-calendar,
+  .p-dropdown {
+    border-radius: 8px;
+  }
+
+  .p-inputtext:enabled:focus,
+  .p-calendar:not(.p-disabled).p-focus .p-inputtext,
+  .p-dropdown:not(.p-disabled).p-focus {
+    border-color: #8b5cf6;
+    box-shadow: 0 0 0 0.2rem rgba(139, 92, 246, 0.25);
+  }
+
+  .p-button {
+    border-radius: 8px;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .p-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+  }
+
+  .p-error {
+    color: #ef4444;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+    font-weight: 500;
+  }
+
+  .p-invalid {
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 0 0.2rem rgba(239, 68, 68, 0.25) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .potion-form-card {
+    margin: 0.5rem;
+    border-radius: 12px;
+  }
+
+  .card-header h2 {
+    font-size: 1.75rem;
+  }
+
+  .form-section {
+    padding: 1rem;
+  }
+
+  .section-title {
+    font-size: 1.25rem;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions p-button {
+    width: 100%;
+  }
+
+  :host ::ng-deep .p-button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-header h2 {
+    font-size: 1.5rem;
+    padding: 1rem;
+  }
+
+  .form-section {
+    padding: 0.75rem;
+  }
+
+  .section-title {
+    font-size: 1.1rem;
+  }
+}

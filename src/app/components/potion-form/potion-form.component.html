@@ -1,0 +1,162 @@
+<p-toast position="top-right" />
+
+<p-card class="potion-form-card">
+  <ng-template pTemplate="header">
+    <div class="card-header">
+      <h2 class="text-3xl font-bold text-center py-4 text-purple-900 dark:text-purple-100">
+        🧪 Create New Potion Order
+      </h2>
+    </div>
+  </ng-template>
+
+  <form [formGroup]="potionForm" (ngSubmit)="onSubmit()" class="potion-form">
+    <div class="form-section">
+      <h3 class="section-title">📋 Order Information</h3>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="form-field">
+          <label for="potionNumber" class="form-label required">Potion Number</label>
+          <input
+            id="potionNumber"
+            type="text"
+            pInputText
+            formControlName="potionNumber"
+            class="w-full"
+            readonly
+          />
+        </div>
+
+        <div class="form-field">
+          <label for="orderDate" class="form-label required">Order Date</label>
+          <p-datepicker
+            inputId="orderDate"
+            formControlName="orderDate"
+            [showIcon]="true"
+            dateFormat="dd/mm/yy"
+            [disabled]="true"
+            styleClass="w-full"
+            inputStyleClass="w-full"
+          />
+        </div>
+
+        <div class="form-field">
+          <label for="orderedBy" class="form-label required">Customer Name</label>
+          <input
+            id="orderedBy"
+            type="text"
+            pInputText
+            formControlName="orderedBy"
+            placeholder="e.g., Merlin the Wise"
+            class="w-full"
+            [class.p-invalid]="isFieldInvalid('orderedBy')"
+          />
+          @if (isFieldInvalid('orderedBy')) {
+            <small class="p-error">{{ getFieldError('orderedBy') }}</small>
+          }
+        </div>
+
+        <div class="form-field">
+          <label for="readyDate" class="form-label required">Ready Date</label>
+          <p-datepicker
+            inputId="readyDate"
+            formControlName="readyDate"
+            [showIcon]="true"
+            dateFormat="dd/mm/yy"
+            [minDate]="minDate"
+            styleClass="w-full"
+            inputStyleClass="w-full"
+            [class.p-invalid]="isFieldInvalid('readyDate')"
+          />
+          @if (isFieldInvalid('readyDate')) {
+            <small class="p-error">{{ getFieldError('readyDate') }}</small>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3 class="section-title">🚚 Delivery Information</h3>
+      
+      <div class="grid grid-cols-1 gap-6">
+        <div class="form-field">
+          <label for="deliveryAddress" class="form-label required">Delivery Address</label>
+          <input
+            id="deliveryAddress"
+            type="text"
+            pInputText
+            formControlName="deliveryAddress"
+            placeholder="e.g., Tower of Magic, 4th Floor, Enchanted Forest"
+            class="w-full"
+            [class.p-invalid]="isFieldInvalid('deliveryAddress')"
+          />
+          @if (isFieldInvalid('deliveryAddress')) {
+            <small class="p-error">{{ getFieldError('deliveryAddress') }}</small>
+          }
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="form-field">
+            <label for="deliveryMethod" class="form-label required">Delivery Method</label>
+            <p-select
+              inputId="deliveryMethod"
+              [options]="deliveryMethods"
+              formControlName="deliveryMethod"
+              optionLabel="label"
+              optionValue="value"
+              placeholder="Select delivery method"
+              styleClass="w-full"
+              [class.p-invalid]="isFieldInvalid('deliveryMethod')"
+            />
+            @if (isFieldInvalid('deliveryMethod')) {
+              <small class="p-error">{{ getFieldError('deliveryMethod') }}</small>
+            }
+          </div>
+
+          <div class="form-field">
+            <label for="paymentMethod" class="form-label required">Payment Method</label>
+            <p-select
+              inputId="paymentMethod"
+              [options]="paymentMethods"
+              formControlName="paymentMethod"
+              optionLabel="label"
+              optionValue="value"
+              placeholder="Select payment method"
+              styleClass="w-full"
+              [class.p-invalid]="isFieldInvalid('paymentMethod')"
+            />
+            @if (isFieldInvalid('paymentMethod')) {
+              <small class="p-error">{{ getFieldError('paymentMethod') }}</small>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <app-ingredient-table formControlName="ingredients" />
+      @if (isFieldInvalid('ingredients')) {
+        <div class="mt-3">
+          <p-message severity="error" [text]="getFieldError('ingredients')" />
+        </div>
+      }
+    </div>
+
+    <div class="form-actions">
+      <p-button
+        type="button"
+        label="Reset"
+        icon="pi pi-refresh"
+        severity="secondary"
+        (onClick)="resetForm()"
+        [outlined]="true"
+      />
+      <p-button
+        type="submit"
+        label="Brew Potion"
+        icon="pi pi-check"
+        severity="success"
+        [loading]="false"
+      />
+    </div>
+  </form>
+</p-card>
