@@ -18,6 +18,6 @@ describe('App', () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, test_project');
+    expect(compiled.querySelector('.header-title')?.textContent).toContain("Wizard's Potion Shop");
   });
 });

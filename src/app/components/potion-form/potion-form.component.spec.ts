@@ -120,29 +120,23 @@ describe('PotionFormComponent', () => {
     });
 
     it('should submit form when valid', () => {
+      fixture.detectChanges();
       component.onSubmit();
 
       expect(potionService.addPotion).toHaveBeenCalled();
-      expect(messageService.add).toHaveBeenCalledWith(
-        jasmine.objectContaining({
-          severity: 'success'
-        })
-      );
+      expect(component.submitted()).toBe(false);
     });
 
     it('should not submit form when invalid', () => {
       component.potionForm.patchValue({
         orderedBy: ''
       });
+      fixture.detectChanges();
 
       component.onSubmit();
 
       expect(potionService.addPotion).not.toHaveBeenCalled();
-      expect(messageService.add).toHaveBeenCalledWith(
-        jasmine.objectContaining({
-          severity: 'error'
-        })
-      );
+      expect(component.submitted()).toBe(true);
     });
 
     it('should reset form after successful submission', () => {

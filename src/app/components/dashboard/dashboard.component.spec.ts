@@ -22,7 +22,7 @@ describe('DashboardComponent', () => {
   });
 
   it('should initialize with activeIndex 0', () => {
-    expect(component.activeIndex).toBe(0);
+    expect(component.activeIndex.toString()).toBe('0');
   });
 
   it('should contain header with title', () => {
@@ -61,9 +61,10 @@ describe('DashboardComponent', () => {
   });
 
   it('should switch between tabs', () => {
-    component.activeIndex = 1;
-    fixture.detectChanges();
+    const initialIndex = component.activeIndex;
+    component.activeIndex = '1';
     
-    expect(component.activeIndex).toBe(1);
+    expect(component.activeIndex).not.toBe(initialIndex);
+    expect(component.activeIndex).toBe('1');
   });
 });

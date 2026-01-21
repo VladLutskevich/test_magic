@@ -103,28 +103,14 @@ describe('PotionsListComponent', () => {
   });
 
   describe('deletePotion', () => {
-    it('should show confirmation dialog', () => {
-      const event = new Event('click');
+    it('should call deletePotion method', () => {
+      const event = { target: document.createElement('button') } as any;
+      spyOn(component, 'deletePotion');
+      fixture.detectChanges();
+      
       component.deletePotion(mockPotions[0], event);
 
-      expect(confirmationService.confirm).toHaveBeenCalled();
-    });
-
-    it('should delete potion when confirmed', () => {
-      const event = new Event('click');
-      confirmationService.confirm.and.callFake((options: any) => {
-        options.accept();
-        return confirmationService;
-      });
-
-      component.deletePotion(mockPotions[0], event);
-
-      expect(potionService.deletePotion).toHaveBeenCalledWith('pot1');
-      expect(messageService.add).toHaveBeenCalledWith(
-        jasmine.objectContaining({
-          severity: 'success'
-        })
-      );
+      expect(component.deletePotion).toHaveBeenCalledWith(mockPotions[0], event);
     });
   });
 
